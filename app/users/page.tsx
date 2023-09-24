@@ -1,11 +1,12 @@
-import React from 'react'
+import React, { FC } from 'react'
 
 interface User {
   id: string
   name: string
+  email: string
 }
 
-const UsersPage = async () => {
+const UsersPage: FC = async () => {
   const response = await fetch(
     'https://jsonplaceholder.typicode.com/users',
     { cache: 'no-store' }
@@ -16,13 +17,26 @@ const UsersPage = async () => {
     <>
       <h1>Users</h1>
       <p>{ new Date().toLocaleTimeString() }</p>
-      <ul>
-        {
-          users.map(user => (
-            <li key={ user.id }>{ user.name }</li>
-          ))
-        }
-      </ul>
+      <table
+        className='table table-zebra'
+      >
+        <thead>
+          <tr>
+            <th>NAME</th>
+            <th>EMAIL</th>
+          </tr>
+        </thead>
+        <tbody>
+          {
+            users.map(user => (
+              <tr key={ user.id }>
+                <td>{ user.name }</td>
+                <td>{ user.email }</td>
+              </tr>
+            ))
+          }
+        </tbody>
+      </table>
     </>
   )
 }
